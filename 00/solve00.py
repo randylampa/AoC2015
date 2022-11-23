@@ -12,7 +12,7 @@ ISSUE=0
 def solve_part_1():
 	demo = 1
 
-	fn = utils.get_input_file(demo, ISSUE);
+	fn = utils.get_input_file(demo, ISSUE, True);
 	print(fn)
 	"""Do something here >>>"""
 
@@ -26,7 +26,7 @@ def solve_part_1():
 def solve_part_2():
 	demo = 1
 
-	fn = utils.get_input_file(demo, ISSUE);
+	fn = utils.get_input_file(demo, ISSUE, True);
 	print(fn)
 	"""Do something here >>>"""
 

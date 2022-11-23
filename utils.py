@@ -6,13 +6,15 @@
 
 import sys
 
-def get_input_file(demo, issue:int=None):
+def get_input_file(demo, issue:int=None, sensible:bool=False):
 	s = str(issue).rjust(2,'0') if issue is not None else ''
-	return ('input{}' if not demo else 'input{}-demo').format(s)
+	f = 'input{}' if not demo else 'input{}-demo' if not sensible else 'input-demo{}'
+	return f.format(s)
 
-def get_output_file(demo, issue:int=None):
+def get_output_file(demo, issue:int=None, sensible:bool=False):
 	s = str(issue).rjust(2,'0') if issue is not None else ''
-	return ('output{}' if not demo else 'output{}-demo').format(s)
+	f = 'output{}' if not demo else 'output{}-demo' if not sensible else 'output-demo{}'
+	return f.format(s)
 
 def read_file_into_list(name='input', mapfnc = lambda x:x.strip()):
 	"""
