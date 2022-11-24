@@ -10,11 +10,11 @@ import utils
 ISSUE=5
 
 def word_is_nice(word:str) -> bool:
-	
+
 	has_three_vowels = False
 	has_doubleletter = False
 	has_restricted = False
-	
+
 	# search for restricted
 	restricted = ['ab','cd','pq','xy']
 	for rs in restricted:
@@ -75,12 +75,15 @@ def solve_part_1(demo:bool) -> str:
 		print("Word `{}` is {}".format(word, 'nice' if nice else 'naughty'))
 		if nice:
 			count_nice+=1
-	
+
 	answer = count_nice
 
 	"""<<< Do something here"""
 	utils.print_answer(1, demo, answer)
 	return answer
+
+def word_is_nice2(word:str) -> bool:
+	pass
 
 def solve_part_2(demo:bool) -> str:
 
@@ -88,20 +91,28 @@ def solve_part_2(demo:bool) -> str:
 	print(fn)
 	"""Do something here >>>"""
 
-	print('Part 2 not solved yet')
-	
-	answer = None
+	words = utils.read_file_into_list(fn)
+	print(words)
+
+	count_nice = 0
+	for word in words:
+		nice = word_is_nice2(word)
+		print("Word `{}` is {}".format(word, 'nice' if nice else 'naughty'))
+		if nice:
+			count_nice+=1
+
+	answer = count_nice
 
 	"""<<< Do something here"""
 	utils.print_answer(2, demo, answer)
 	return answer
 
 def main(args):
-	
-	solve_part_1(0)
-	
-	#solve_part_2(1)
-	
+
+	#solve_part_1(0)
+
+	solve_part_2(1)
+
 	return 0
 
 if __name__ == '__main__':
