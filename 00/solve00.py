@@ -9,8 +9,7 @@ import utils
 
 ISSUE=0
 
-def solve_part_1():
-	demo = 1
+def solve_part_1(demo:bool) -> str:
 
 	fn = utils.get_input_file(demo, ISSUE, True);
 	print(fn)
@@ -23,8 +22,7 @@ def solve_part_1():
 	"""<<< Do something here"""
 	utils.print_answer(1, demo, answer)
 
-def solve_part_2():
-	demo = 1
+def solve_part_2(demo:bool) -> str:
 
 	fn = utils.get_input_file(demo, ISSUE, True);
 	print(fn)
@@ -39,9 +37,9 @@ def solve_part_2():
 
 def main(args):
 	
-	solve_part_1()
+	solve_part_1(1)
 	
-	solve_part_2()
+	solve_part_2(1)
 	
 	return 0
 

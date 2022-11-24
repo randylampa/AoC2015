@@ -6,17 +6,17 @@
 
 import sys
 
-def get_input_file(demo, issue:int=None, sensible:bool=False):
+def get_input_file(demo, issue:int = None, sensible:bool = False) -> str:
 	s = str(issue).rjust(2,'0') if issue is not None else ''
 	f = 'input{}' if not demo else 'input{}-demo' if not sensible else 'input-demo{}'
 	return f.format(s)
 
-def get_output_file(demo, issue:int=None, sensible:bool=False):
+def get_output_file(demo, issue:int = None, sensible:bool = False) -> str:
 	s = str(issue).rjust(2,'0') if issue is not None else ''
 	f = 'output{}' if not demo else 'output{}-demo' if not sensible else 'output-demo{}'
 	return f.format(s)
 
-def read_file_into_list(name='input', mapfnc = lambda x:x.strip()):
+def read_file_into_list(name = 'input', mapfnc = lambda x:x.strip()) -> list:
 	"""
 	Reads all lines into list and map mapfnc on each.
 	"""
@@ -25,19 +25,19 @@ def read_file_into_list(name='input', mapfnc = lambda x:x.strip()):
 	f.close()
 	return [*map(mapfnc, lines)]
 
-def read_file_into_list_of_ints(name='input'):
+def read_file_into_list_of_ints(name = 'input') -> list:
 	"""
 	Reads all lines into list and map int(x.strip()) on each.
 	"""
 	return read_file_into_list(name, lambda x: int(x.strip()))
 	
-def read_file_into_lists_of_ints(name='input', mapfnc = lambda x:x.strip()):
+def read_file_into_lists_of_ints(name = 'input', mapfnc = lambda x:x.strip())->list:
 	"""
 	Read 
 	"""
 	return read_file_into_list(name, lambda x: [*map(int, x.strip().split(','))])
 
-def print_answer(part:int, demo, answer):
+def print_answer(part:int, demo, answer) -> None:
 	print("Answer_{} = {}{}".format(part, answer, ' (demo)' if demo else ''))
 
 def main(args):
