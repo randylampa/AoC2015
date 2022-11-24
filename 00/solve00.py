@@ -11,7 +11,7 @@ ISSUE=0
 
 def solve_part_1(demo:bool) -> str:
 
-	fn = utils.get_input_file(demo, ISSUE, True);
+	fn = utils.get_input_file(demo, ISSUE, True)
 	print(fn)
 	"""Do something here >>>"""
 
@@ -21,10 +21,11 @@ def solve_part_1(demo:bool) -> str:
 
 	"""<<< Do something here"""
 	utils.print_answer(1, demo, answer)
+	return answer
 
 def solve_part_2(demo:bool) -> str:
 
-	fn = utils.get_input_file(demo, ISSUE, True);
+	fn = utils.get_input_file(demo, ISSUE, True)
 	print(fn)
 	"""Do something here >>>"""
 
@@ -34,6 +35,7 @@ def solve_part_2(demo:bool) -> str:
 
 	"""<<< Do something here"""
 	utils.print_answer(2, demo, answer)
+	return answer
 
 def main(args):
 	
