@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Aoc 2015 - 00
+# Aoc 2015 - 03
 
 import sys
 sys.path.append('..')
@@ -114,7 +114,7 @@ def solve_part_2():
 
 def main(args):
 	
-#	solve_part_1()
+	solve_part_1()
 	
 	solve_part_2()
 	
