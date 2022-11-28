@@ -63,6 +63,20 @@ def grid_apply(light_grid:list, begin:tuple, end:tuple, cmd:str):
 	#~ print_grid(light_grid)
 	#~ print(light_grid)
 
+def grid_apply2(light_grid:list, begin:tuple, end:tuple, cmd:str):
+	#~ print("grid_apply", (cmd, begin, end))
+	for y in range(begin[1], end[1] + 1):
+		for x in range(begin[0], end[0] + 1):
+			val = light_grid[y][x]
+			if cmd == 'toggle':
+				val2 = val+2
+			else:
+				val2 = val+1 if cmd=='on' else val-1
+			#~ print((x,y,cmd,val,val2))
+			light_grid[y][x] = val2
+	#~ print_grid(light_grid)
+	#~ print(light_grid)
+
 def grid_count_on(light_grid:list) -> int:
 	cnt = 0
 	for line in light_grid:
@@ -99,6 +113,8 @@ def solve_part_1(demo:bool) -> str:
 def solve_part_2(demo:bool) -> str:
 
 	fn = utils.get_input_file(demo, ISSUE, True)
+	if demo:
+		fn+="-2a"
 	print(fn)
 	"""Do something here >>>"""
 
@@ -111,7 +127,7 @@ def solve_part_2(demo:bool) -> str:
 
 	# ~ apply
 	for dinstr in dinstrs:
-		grid_apply(light_grid, dinstr['begin'], dinstr['end'], dinstr['cmd'])
+		grid_apply2(light_grid, dinstr['begin'], dinstr['end'], dinstr['cmd'])
 
 	# ~ count on
 	answer = grid_count_on(light_grid)
@@ -122,9 +138,10 @@ def solve_part_2(demo:bool) -> str:
 
 def main(args):
 
-	solve_part_1(0)
+	#~ solve_part_1(0)
 
-	# ~ solve_part_2(1)
+	#~ 17325717 is too low!
+	solve_part_2(0)
 
 	return 0
 
