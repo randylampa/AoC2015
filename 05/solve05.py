@@ -83,7 +83,47 @@ def solve_part_1(demo:bool) -> str:
 	return answer
 
 def word_is_nice2(word:str) -> bool:
-	pass
+	word = word.strip()
+	wl = len(word)
+	# ~ print("Word `{}`".format(word))
+	hasDoubles = False
+	hasCyclope = False
+
+	# search for cyclopes (najit kyklopa jejednodussi - jeden linearni cyklus)
+	i = 0
+	while i < wl-2:
+		cl = word[i]
+		cr = word[i+2]
+		# ~ print("compare cyclope `{}_{}`".format(cl,cr))
+		if cl==cr:
+			hasCyclope = True
+			# ~ print("found cyclope `{}` on position {}".format(cl, i))
+			break
+		i+=1
+	if not hasCyclope:
+		# ~ print("Word `{}` does not contain cyclope".format(word))
+		return False
+
+	# search for doubles
+	j = 0
+	while j < wl-2:
+		double = word[j:j+2]
+		i = j+1 # ensure no overlap
+		while i < wl-2:
+			i+=1
+			double2 = word[i:i+2]
+			# ~ print("compare double `{}` to `{}`".format(double, double2))
+			if double == double2:
+				hasDoubles = True
+				# ~ print("found double `{}` on position {} and {}".format(double, j, i))
+				i=j=wl # cause break of both cycles
+				break
+		j+=1
+	if not hasDoubles:
+		# ~ print("Word `{}` does not contain doubles".format(word))
+		return False
+
+	return hasDoubles and hasCyclope
 
 def solve_part_2(demo:bool) -> str:
 
@@ -91,17 +131,10 @@ def solve_part_2(demo:bool) -> str:
 	print(fn)
 	"""Do something here >>>"""
 
-	words = utils.read_file_into_list(fn)
-	print(words)
+	words_are_nice = utils.read_file_into_list(fn, word_is_nice2)
+	# ~ print(words_are_nice)
 
-	count_nice = 0
-	for word in words:
-		nice = word_is_nice2(word)
-		print("Word `{}` is {}".format(word, 'nice' if nice else 'naughty'))
-		if nice:
-			count_nice+=1
-
-	answer = count_nice
+	answer = sum(words_are_nice)
 
 	"""<<< Do something here"""
 	utils.print_answer(2, demo, answer)
@@ -111,7 +144,7 @@ def main(args):
 
 	#solve_part_1(0)
 
-	solve_part_2(1)
+	solve_part_2(0)
 
 	return 0
 
