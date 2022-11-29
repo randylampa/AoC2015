@@ -25,6 +25,18 @@ def read_file_into_list(name = 'input', mapfnc = lambda x:x.strip()) -> list:
 	f.close()
 	return [*map(mapfnc, lines)]
 
+def read_file_into_list_bin(name = 'input', mapfnc = None) -> list:
+	"""
+	Reads all lines into list and map mapfnc on each.
+	"""
+	f = open(name, 'rb')
+	lines = f.readlines()
+	f.close()
+	if mapfnc is not None:
+		return [*map(mapfnc, lines)]
+	else:
+		return lines
+
 def read_file_into_list_of_ints(name = 'input') -> list:
 	"""
 	Reads all lines into list and map int(x.strip()) on each.
