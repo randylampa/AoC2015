@@ -49,8 +49,8 @@ def print_wires(wires:list):
 	print('<<<wires')
 
 def clean_wires(wires:list):
-	for wire in wires:
-		wire.value = None
+	for wire_name in wires:
+		wires[wire_name]['value'] = None
 
 def get_input_value(input_element, wires:list) -> int:
 	if type(input_element) is int:
@@ -90,15 +90,15 @@ def solve_part_1(demo:bool) -> str:
 	"""Do something here >>>"""
 
 	connections = utils.read_file_into_list(fn, parse_connection)
-	print_connections(connections)
+	# ~ print_connections(connections)
 
 	wires = {}
 	for wire in connections:
 		wires[wire['name']] = wire
-	print_wires(wires)
+	# ~ print_wires(wires)
 
 	update_wires(wires)
-	print_wires(wires)
+	# ~ print_wires(wires)
 
 # ~ # demo final values
 # ~ d: 72
@@ -125,9 +125,37 @@ def solve_part_2(demo:bool) -> str:
 	print(fn)
 	"""Do something here >>>"""
 
-	print('Part 2 not solved yet')
+	connections = utils.read_file_into_list(fn, parse_connection)
+	# ~ print_connections(connections)
 
-	answer = None
+	wires = {}
+	for wire in connections:
+		wires[wire['name']] = wire
+	# ~ print_wires(wires)
+
+	update_wires(wires)
+	# ~ print_wires(wires)
+
+	wire_a_value = wires['a']['value']
+	print(['wire_a_value before', wire_a_value])
+
+	# set 'b's new value
+	wires['b']['gate'] = None
+	wires['b']['inputs'] = [wire_a_value]
+
+	# ~ print(wires['a'])
+	# ~ print(wires['b'])
+
+	clean_wires(wires)
+	# ~ print(wires['a'])
+	# ~ print(wires['b'])
+	
+	update_wires(wires)
+
+	wire_a_value = wires['a']['value']
+	print(['wire_a_value after', wire_a_value])
+	
+	answer = wire_a_value
 
 	"""<<< Do something here"""
 	utils.print_answer(2, demo, answer)
@@ -135,9 +163,9 @@ def solve_part_2(demo:bool) -> str:
 
 def main(args):
 
-	solve_part_1(0)
+	# ~ solve_part_1(0)
 
-	# ~ solve_part_2(1)
+	solve_part_2(0)
 
 	return 0
 
