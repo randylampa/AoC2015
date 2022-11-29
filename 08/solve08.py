@@ -26,10 +26,10 @@ def solve_part_1(demo:bool) -> str:
 	countsMem = []
 	for line in lines:
 		# ~ print(line)
+		countsLit.append(len(line))
 		# get rid of quotes and unescape
 		value = line[1:-1].decode('unicode_escape')
 		# ~ print(value)
-		countsLit.append(len(line))
 		countsMem.append(len(value))
 
 	answer = sum(countsLit) - sum(countsMem)
@@ -43,10 +43,22 @@ def solve_part_2(demo:bool) -> str:
 	fn = utils.get_input_file(demo, ISSUE, True)
 	print(fn)
 	"""Do something here >>>"""
-
-	print('Part 2 not solved yet')
 	
-	answer = None
+	lines = utils.read_file_into_list(fn)
+	# ~ print(lines)
+	# ~ exit()
+
+	countsLit = []
+	countsMem = []
+	for line in lines:
+		# ~ print(len(line), line)
+		countsMem.append(len(line))
+		# ~ value = line.encode() # not desired results
+		value = '"' + line.replace('\\', '\\\\').replace('"', '\\"') + '"'
+		# ~ print(len(value), value)
+		countsLit.append(len(value))
+	
+	answer = sum(countsLit) - sum(countsMem)
 
 	"""<<< Do something here"""
 	utils.print_answer(2, demo, answer)
@@ -54,9 +66,9 @@ def solve_part_2(demo:bool) -> str:
 
 def main(args):
 	
-	solve_part_1(0)
+	# ~ solve_part_1(0)
 	
-	# ~ solve_part_2(1)
+	solve_part_2(0)
 	
 	return 0
 
