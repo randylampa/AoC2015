@@ -18,6 +18,30 @@ def parse_line(line:str) -> dict:
 	return dm
 	# ~ return (mm.group(1), mm.group(2), int(mm.group(3)))
 
+def build_city_map(inputs:list) -> dict:
+	city_map = {}
+	for inp in inputs:
+		nA = inp['A']
+		nB = inp['B']
+		if nA not in city_map:
+			city_map[nA] = {}
+		if nB not in city_map:
+			city_map[nB] = {}
+		dA = city_map[nA]
+		dB = city_map[nB]
+		dA[nB] = inp['dist']
+		dB[nA] = inp['dist']
+		# ~ print('ooj', dA, dB)
+	# ~ print(city_map)
+	return city_map
+
+def walk_shortest(city_map:dict, start:str) -> list:
+	for dest in city_map[start]:
+		dist = city_map[dest]
+		print(dist, dest)
+		print("{} -> {} = {}".format(start, dest, dist));
+	pass
+
 def solve_part_1(demo:bool) -> str:
 
 	fn = utils.get_input_file(demo, ISSUE, True)
@@ -27,30 +51,12 @@ def solve_part_1(demo:bool) -> str:
 	inputs = utils.read_file_into_list(fn, parse_line)
 	# ~ print(inputs)
 
-	city_map = {}
-	cm_def = {
-		'name': None,
-		'dists': {},
-	}
-	for inp in inputs:
-		nA = inp['A']
-		nB = inp['B']
-		if nA not in city_map:
-			city_map[nA] = {
-				'name': nA,
-				'dists': {},
-			}
-		if nB not in city_map:
-			city_map[nB] = {
-				'name': nB,
-				'dists': {},
-			}
-		dA = city_map[nA]
-		dB = city_map[nB]
-		dA['dists'][nB] = inp['dist']
-		dB['dists'][nA] = inp['dist']
-		# ~ print('ooj', dA, dB)
-	print(city_map)
+	city_map = build_city_map(inputs)
+	# ~ print(city_map)
+
+	start = 'London'
+	shortest_route = walk_shortest(city_map, start)
+	print(shortest_route)
 
 	answer = None
 
