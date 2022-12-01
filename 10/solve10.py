@@ -57,13 +57,24 @@ def solve_part_1(demo:bool) -> str:
 """
 def solve_part_2(demo:bool) -> str:
 
-	fn = utils.get_input_file(demo, ISSUE, True)
-	print(fn)
+	if demo:
+		seq = "1"
+		cyc = 5
+	else:
+		seq = "1113222113"
+		cyc = 50
 	"""Do something here >>>"""
 
-	print('Part 2 not solved yet')
+	# ~ print('seq', seq)
+	seq1 = seq
+	for i in range(cyc):
+		seq1 = look_and_say(seq1)
+		print('.', end='')
+	print()
+	seq1len = len(seq1)
+	print("Seq `{}` became {} char long after {} cycles".format(seq, seq1len, cyc))
 
-	answer = None
+	answer = seq1len
 
 	"""<<< Do something here"""
 	utils.print_answer(2, demo, answer)
@@ -74,9 +85,9 @@ def solve_part_2(demo:bool) -> str:
 """
 def main(args):
 
-	solve_part_1(0)
+	# ~ solve_part_1(0)
 
-	# ~ solve_part_2(1)
+	solve_part_2(0)
 
 	return 0
 
