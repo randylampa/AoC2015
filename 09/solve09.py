@@ -149,9 +149,43 @@ def solve_part_2(demo:bool) -> str:
 	utils.print_answer(2, demo, answer)
 	return answer
 
+
+def find_step(city:dict, min_max, avoid:set = {}) -> tuple:
+	'''
+	param min_max: expects min(...) or max(...)
+	'''
+	step = None
+	for item in city.items():
+		if (step is None or item[1] == min_max(item[1], step[1])) and item[0] not in avoid:
+			step = item
+	return step
+
+def walk_path(city_map:dict, min_max) -> tuple:
+	'''
+	return: (path_cities, path_distances)
+	'''
+	start = list(city_map.keys())[0] # select first city as start
+	#
+	path_cities = [start]
+	path_distances = []
+	while True:
+		ss = find_step(city_map[path_cities[-1]], min_max, set(path_cities))
+		# ~ print('ss', start, ss)
+		if ss is None:
+			break
+		else:
+			path_cities.append(ss[0])
+			path_distances.append(ss[1])
+	# ~ print(path_cities, path_distances)
+
+	'''
+	TODO: find path back to start, find opposite of your min_max and reprint path from there (omit longest step distance)
+	'''
+	return (path_cities, path_distances)
+
 def main(args):
 
-	solve_part_1(0)
+	# ~ solve_part_1(0)
 	# demo: 605
 	# hot: 141 (inconsistent between runs.. how?)
 	# ['Arbre', 'Tambi', 'Snowdin', 'Faerun', 'Straylight', 'Norrath', 'AlphaCentauri', 'Tristram'], [40, 22, 12, 21, 9, 34, 3]
@@ -163,6 +197,30 @@ def main(args):
 	'''
 
 	# ~ solve_part_2(0)
+
+	# solve both
+	if True:
+		demo = 0
+
+		fn = utils.get_input_file(demo, ISSUE, True)
+		print(fn)
+
+		inputs = utils.read_file_into_list(fn, parse_line)
+		# ~ print(inputs)
+
+		city_map = build_city_map(inputs)
+		# ~ print(city_map)
+		print_city_map(city_map)
+
+		shortest_route = walk_path(city_map, min)
+		print(shortest_route)
+		answer1 = sum(shortest_route[1])
+		utils.print_answer(1, demo, answer1)
+
+		longest_route = walk_path(city_map, max)
+		print(longest_route)
+		answer2 = sum(longest_route[1])
+		utils.print_answer(2, demo, answer2)
 
 	return 0
 
@@ -243,5 +301,5 @@ def naive():
 	pass
 
 if __name__ == '__main__':
-	# ~ sys.exit(main(sys.argv))
-	naive()
+	sys.exit(main(sys.argv))
+	# ~ naive()
