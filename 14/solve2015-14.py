@@ -28,7 +28,7 @@ def parseDeers(demo:bool)->list:
 
 	deers = []
 	for line in lines:
-		mm = re.search('^(?P<who>\w+) can fly (?P<speed>\d+) km/s for (?P<fly>\d+) seconds, .* for (?P<rest>\d+) seconds\.$', line)
+		mm = re.search('^(?P<name>\w+) can fly (?P<speed>\d+) km/s for (?P<fly>\d+) seconds, .* for (?P<rest>\d+) seconds\.$', line)
 		deer = mm.groupdict()
 		# ~ print(deer)
 		deer['speed'] = int(deer['speed'])
@@ -84,17 +84,63 @@ def solve_part_1(demo:bool) -> str:
 	return answer
 
 
+S_FLY = 'flying'
+S_REST = 'resting'
+
+def makeStep(deer:dict)->int:
+	deer['time'] += 1
+	deer['instate'] += 1
+	if deer['state'] == S_FLY:
+		deer['dist'] += deer['speed']
+		if deer['instate'] >= deer['fly']:
+			deer['state'] = S_REST
+			deer['instate'] = 0
+	elif deer['state'] == S_REST:
+		if deer['instate'] >= deer['rest']:
+			deer['state'] = S_FLY
+			deer['instate'] = 0
+	# ~ print(deer)
+	return deer['dist']
+
 '''
 	SOLVE PART 2
 '''
 def solve_part_2(demo:bool) -> str:
 
-	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
-	print(fn)
-	fl = cur_dir + '/' + fn
 	"""Do something here >>>"""
 
-	answer = None
+	simlen = 1000 if demo else 2503
+
+	deers = parseDeers(demo)
+	# ~ dumpDeers(deers)
+
+	""" init deers """
+	for deer in deers:
+		deer['dist'] = 0
+		deer['time'] = 0
+		deer['state'] = S_FLY
+		deer['instate'] = 0
+		deer['points'] = 0
+	# ~ dumpDeers(deers)
+
+	"""simulate:"""
+	print("SIMLEN:", simlen)
+
+	for sec in range(simlen):
+		dists = []
+		for deer in deers:
+			dists.append(makeStep(deer))
+		maxdist = max(dists)
+		for deer in deers:
+			if deer['dist'] == maxdist:
+				deer['points'] += 1
+	dumpDeers(deers)
+
+	points = []
+	for deer in deers:
+		points.append(deer['points'])
+
+	answer = max(points)
 
 	"""<<< Do something here"""
 	utils.print_answer(2, demo, answer)
@@ -102,9 +148,9 @@ def solve_part_2(demo:bool) -> str:
 
 def main():
 
-	solve_part_1(0)
+	# ~ solve_part_1(0)
 
-	# ~ solve_part_2(1)
+	solve_part_2(0)
 
 	pass
 
