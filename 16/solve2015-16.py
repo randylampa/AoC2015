@@ -28,20 +28,27 @@ def read_file_into_dict(name = 'input') -> dict:
 	f.close()
 	for line in lines:
 		k,v = map(lambda x:x.strip(), line.split(':'))
-		outdict[k] = v
+		outdict[k] = int(v)
 	return outdict
 
 def read_file_into_list_of_dict(name = 'input') -> list:
-	outdict = {}
 	f = open(name, 'r')
 	lines = f.readlines()
 	f.close()
+	aunts = []
 	for line in lines:
-		pass
-	pass
-
-def parseParams()->dict:
-	return read_file_into_dict('input-params16')
+		xname,xpar = line.split(':', 1)
+		aunt = {
+			'name': xname,
+			'props': {},
+		}
+		mm = re.findall('(?P<prop>\w+): (?P<val>\d+)(?:,|$)', xpar)
+		for prop,val in mm:
+			aunt['props'][prop] = int(val)
+		# ~ print(aunt)
+		aunts.append(aunt)
+	# ~ print(aunts)
+	return aunts
 
 
 '''
@@ -49,15 +56,31 @@ def parseParams()->dict:
 '''
 def solve_part_1(demo:bool) -> str:
 
-	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
-	print(fn)
-	fl = cur_dir + '/' + fn
 	"""Do something here >>>"""
 
-	params = parseParams()
-	print(params)
+	props_found = read_file_into_dict('input-params16')
+	print(props_found)
 
-	answer = None
+	aunts = read_file_into_list_of_dict('input16')
+	# ~ utils.dump_list_of(aunts)
+
+	aunts_match = []
+	for aunt in aunts:
+		# ~ print(aunt['name'])
+		props = aunt['props']
+		match = True
+		for k in props:
+			match = match and (k in props_found) and (props_found[k] == props[k])
+		if match:
+			# ~ print("aunt matches")
+			aunts_match.append(aunt)
+		else:
+			# ~ print("aunt DOESNT match")
+			pass
+
+	utils.dump_list_of(aunts_match)
+
+	answer = aunts_match[0]['name']
 
 	"""<<< Do something here"""
 	utils.print_answer(1, demo, answer)
