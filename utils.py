@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # Aoc 2015
-#  
+#
 
 import sys
 
@@ -42,12 +42,15 @@ def read_file_into_list_of_ints(name = 'input') -> list:
 	Reads all lines into list and map int(x.strip()) on each.
 	"""
 	return read_file_into_list(name, lambda x: int(x.strip()))
-	
-def read_file_into_lists_of_ints(name = 'input', mapfnc = lambda x:x.strip())->list:
+
+def read_file_into_lists_of_ints(name = 'input') -> list:
 	"""
-	Read 
+	Read all lines into lis of lists (sep=,)
 	"""
 	return read_file_into_list(name, lambda x: [*map(int, x.strip().split(','))])
+
+def dump_list_of(xlist:list):
+	for x in xlist: print(x)
 
 def print_answer(part:int, demo, answer) -> None:
 	print("Answer_{} = {}{}".format(part, answer, ' (demo)' if demo else ''))
