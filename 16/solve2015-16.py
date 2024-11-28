@@ -18,19 +18,6 @@ DAY = 16
 ISSUE = '16'
 
 
-def read_file_into_dict(name = 'input') -> dict:
-	"""
-	Reads all lines into dict and map mapfnc on each.
-	"""
-	outdict = {}
-	f = open(name, 'r')
-	lines = f.readlines()
-	f.close()
-	for line in lines:
-		k,v = map(lambda x:x.strip(), line.split(':'))
-		outdict[k] = int(v)
-	return outdict
-
 def read_file_into_list_of_dict(name = 'input') -> list:
 	f = open(name, 'r')
 	lines = f.readlines()
@@ -58,7 +45,7 @@ def solve_part_1(demo:bool) -> str:
 
 	"""Do something here >>>"""
 
-	props_found = read_file_into_dict('input-params16')
+	props_found = utils.read_file_into_dict('input-params16')
 	print(props_found)
 
 	aunts = read_file_into_list_of_dict('input16')
@@ -92,10 +79,53 @@ def solve_part_1(demo:bool) -> str:
 '''
 def solve_part_2(demo:bool) -> str:
 
-	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
-	print(fn)
-	fl = cur_dir + '/' + fn
 	"""Do something here >>>"""
+
+	props_found = utils.read_file_into_dict('input-params16')
+	print(props_found)
+
+	aunts = read_file_into_list_of_dict('input16')
+	# ~ utils.dump_list_of(aunts)
+
+	'''
+	greater than:	cats, trees
+	fewer than:		pomeranians, goldfish
+	'''
+	aunts_match = []
+	for aunt in aunts:
+		# ~ print(aunt['name'])
+		props = aunt['props']
+		matches = True
+		for k in props:
+			if not k in props_found:
+				print("property {} not found".format(k))
+				matches = False
+				break
+			vf = props_found[k]
+			v = props[k]
+			if k in ['cats', 'trees']:
+				# ~ v > vf
+				if not v > vf:
+					matches = False
+					break
+			elif k in ['pomeranians', 'goldfish']:
+				# ~ v < vf
+				if not v < vf:
+					matches = False
+					break
+			else:
+				# ~ v = vf
+				if not v == vf:
+					matches = False
+					break
+		if matches:
+			# ~ print("aunt matches")
+			aunts_match.append(aunt)
+		else:
+			# ~ print("aunt DOESNT match")
+			pass
+
+	utils.dump_list_of(aunts_match)
 
 	answer = None
 
@@ -105,9 +135,9 @@ def solve_part_2(demo:bool) -> str:
 
 def main():
 
-	solve_part_1(1)
+	# ~ solve_part_1(1)
 
-	# ~ solve_part_2(1)
+	solve_part_2(1)
 
 	pass
 
