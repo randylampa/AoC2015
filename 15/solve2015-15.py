@@ -143,12 +143,60 @@ def solve_part_1(demo:bool) -> str:
 '''
 def solve_part_2(demo:bool) -> str:
 
-	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
-	print(fn)
-	fl = cur_dir + '/' + fn
+	ingrts = parseIngredients(demo)
+	print(ingrts)
 	"""Do something here >>>"""
 
-	answer = None
+	ningr = len(ingrts)
+	if ningr == 2:
+		gen_con = gen_con2
+	elif ningr == 3:
+		gen_con = gen_con3
+	elif ningr == 4:
+		gen_con = gen_con4
+	else:
+		exit("generator not defined for {} ingredients".format(ningr))
+
+	mixtures = []
+	mixture_values = []
+	for q in gen_con(100):
+		# ~ print("testing concentration:", q)
+		mixture = {
+			'cap': 0,
+			'dur': 0,
+			'fla': 0,
+			'tex': 0,
+			'cal': 0,
+		}
+		for i in range(ningr):
+			spoons = q[i]
+			ingrt = ingrts[i]
+			# ~ print("take {} spoon(s) of {}".format(spoons, ingrt['name']))
+			mixture['cap'] += spoons * ingrt['cap']
+			mixture['dur'] += spoons * ingrt['dur']
+			mixture['fla'] += spoons * ingrt['fla']
+			mixture['tex'] += spoons * ingrt['tex']
+			mixture['cal'] += spoons * ingrt['cal']
+		# ~ print(mixture)
+		mv = list(mixture.values())[:-1] # do not count 'cal' to total score
+		value = math.prod(mv)
+
+		mixture['value'] = value
+		mixture['concs'] = q
+
+		if min(mv) < 1:
+			# ~ print("disqualify mixture as non-positive:", mixture)
+			continue
+		if mixture['cal'] != 500:
+			# ~ print("disqualify mixture due to calories requirements:", mixture)
+			continue
+
+		mixture_values.append(value)
+		mixtures.append(mixture)
+	dumpMixtures(mixtures)
+	# ~ print(mixture_values)
+
+	answer = max(mixture_values)
 
 	"""<<< Do something here"""
 	utils.print_answer(2, demo, answer)
@@ -156,9 +204,9 @@ def solve_part_2(demo:bool) -> str:
 
 def main():
 
-	solve_part_1(0)
+	# ~ solve_part_1(0)
 
-	solve_part_2(1)
+	solve_part_2(0)
 
 	pass
 
