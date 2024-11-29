@@ -7,30 +7,30 @@
 
 import sys
 import os
+import re
 cur_dir = os.path.dirname(os.path.realpath(__file__))
 par_dir = os.path.dirname(cur_dir)
 sys.path.append(par_dir)
 import utils
-import re
 
 YEAR = 2015
 DAY = 16
 ISSUE = '16'
 
 
-def read_file_into_list_of_dict(name = 'input') -> list:
+def read_file_into_list_of_dict(name='input') -> list:
 	f = open(name, 'r')
 	lines = f.readlines()
 	f.close()
 	aunts = []
 	for line in lines:
-		xname,xpar = line.split(':', 1)
+		xname, xpar = line.split(':', 1)
 		aunt = {
 			'name': xname,
 			'props': {},
 		}
 		mm = re.findall('(?P<prop>\w+): (?P<val>\d+)(?:,|$)', xpar)
-		for prop,val in mm:
+		for prop, val in mm:
 			aunt['props'][prop] = int(val)
 		# ~ print(aunt)
 		aunts.append(aunt)
@@ -38,11 +38,10 @@ def read_file_into_list_of_dict(name = 'input') -> list:
 	return aunts
 
 
-'''
-	SOLVE PART 1
-'''
-def solve_part_1(demo:bool) -> str:
-
+def solve_part_1(demo: bool) -> str:
+	'''
+		SOLVE PART 1
+	'''
 	"""Do something here >>>"""
 
 	props_found = utils.read_file_into_dict('input-params16')
@@ -74,10 +73,10 @@ def solve_part_1(demo:bool) -> str:
 	return answer
 
 
-'''
-	SOLVE PART 2
-'''
-def solve_part_2(demo:bool) -> str:
+def solve_part_2(demo: bool) -> str:
+	'''
+		SOLVE PART 2
+	'''
 
 	"""Do something here >>>"""
 
@@ -97,7 +96,7 @@ def solve_part_2(demo:bool) -> str:
 		props = aunt['props']
 		matches = True
 		for k in props:
-			if not k in props_found:
+			if k not in props_found:
 				print("property {} not found".format(k))
 				matches = False
 				break
@@ -127,19 +126,21 @@ def solve_part_2(demo:bool) -> str:
 
 	utils.dump_list_of(aunts_match)
 
-	answer = None
+	answer = aunts_match[0]['name']
 
 	"""<<< Do something here"""
 	utils.print_answer(2, demo, answer)
 	return answer
 
+
 def main():
 
-	# ~ solve_part_1(1)
+	# ~ solve_part_1(0)
 
-	solve_part_2(1)
+	solve_part_2(0)
 
 	pass
+
 
 if __name__ == '__main__':
 	sys.exit(main())
