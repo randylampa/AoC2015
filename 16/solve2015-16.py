@@ -29,7 +29,7 @@ def read_file_into_list_of_dict(name='input') -> list:
 			'name': xname,
 			'props': {},
 		}
-		mm = re.findall('(?P<prop>\w+): (?P<val>\d+)(?:,|$)', xpar)
+		mm = re.findall('(?P<prop>\\w+): (?P<val>\\d+)(?:,|$)', xpar)
 		for prop, val in mm:
 			aunt['props'][prop] = int(val)
 		# ~ print(aunt)
