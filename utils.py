@@ -22,22 +22,22 @@ def get_output_file(demo, issue: int = None, sensible: bool = False) -> str:
 
 def read_file_into_lines(name: str = 'input', mode: str = 'r') -> list:
 	"""
-	eads all lines into list
+	Reads all lines into list
 	"""
-	f = open(name, 'r')
+	f = open(name, mode)
 	lines = f.readlines()
 	f.close()
 	return lines
 
 
-def read_file_into_list(name='input', mapfnc=lambda x: x.strip()) -> list:
+def read_file_into_list(name: str = 'input', mapfnc=lambda x: x.strip()) -> list:
 	"""
 	Reads all lines into list and map mapfnc on each.
 	"""
 	return [*map(mapfnc, read_file_into_lines(name))]
 
 
-def read_file_into_list_bin(name='input', mapfnc=None) -> list:
+def read_file_into_list_bin(name: str = 'input', mapfnc=None) -> list:
 	"""
 	Reads all lines into list and map mapfnc on each.
 	"""
@@ -48,21 +48,21 @@ def read_file_into_list_bin(name='input', mapfnc=None) -> list:
 		return lines
 
 
-def read_file_into_list_of_ints(name='input') -> list:
+def read_file_into_list_of_ints(name: str = 'input') -> list:
 	"""
 	Reads all lines into list and map int(x.strip()) on each.
 	"""
 	return read_file_into_list(name, lambda x: int(x.strip()))
 
 
-def read_file_into_lists_of_ints(name='input') -> list:
+def read_file_into_lists_of_ints(name: str = 'input') -> list:
 	"""
 	Read all lines into list of lists (sep=,)
 	"""
 	return read_file_into_list(name, lambda x: [*map(int, x.strip().split(','))])
 
 
-def read_file_into_dict(name: str = 'input', kvpattrn: str='(?P<k>.*):\s*(?P<v>.*)', vmap=int) -> dict:
+def read_file_into_dict(name: str = 'input', kvpattrn: str = '(?P<k>.*):\\s*(?P<v>.*)', vmap=int) -> dict:
 	"""
 	Reads all lines into dict and maps vmap on each value
 	"""
